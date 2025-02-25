@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block title %}Welcome to CyNoX{% endblock %}
+
+{% block content %}
+<section class="landing-page">
+    <div class="container">
+        <h1>Welcome to CyNoX</h1>
+        <p>CyNoX is a secure messenger application designed to protect your privacy and ensure seamless communication. Join us to experience encrypted messaging and secure connections.</p>
+        
+        {% if 'username' in session %}
+            <p>Hello, {{ session['username'] }}! Ready to start chatting?</p>
+            <a href="{{ url_for('chat') }}" class="btn btn-primary">Go to Chat</a>
+        {% else %}
+            <p>Join CyNoX today and start communicating securely!</p>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Log In</a>
+            <a href="{{ url_for('register') }}" class="btn btn-secondary">Register</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+```
+
+### Step 4: Review the Code
+1. **Extending the Base Template**: The file correctly extends `layout.html` using `{% extends "layout.html" %}`.
+2. **Title Block**: The title block is set to "Welcome to CyNoX", as required.
+3. **Content Block**:
+   - Includes a welcome message and a brief description of the application.
+   - Dynamically displays navigation options based on the user's session state:
+     - If the user is logged in, it shows a personalized greeting and a button to access the chat.
+     - If the user is not logged in, it shows buttons to log in or register.
+4. **Styling and Classes**: The file uses semantic HTML and includes classes (`btn btn-primary`, `btn btn-secondary`) for styling, which aligns with conventions in modern web development.
+5. **Dependencies**: The file uses `url_for` for generating URLs, consistent with Flask's best practices.
+
+### Final Output
+```
+{% extends "layout.html" %}
+
+{% block title %}Welcome to CyNoX{% endblock %}
+
+{% block content %}
+<section class="landing-page">
+    <div class="container">
+        <h1>Welcome to CyNoX</h1>
+        <p>CyNoX is a secure messenger application designed to protect your privacy and ensure seamless communication. Join us to experience encrypted messaging and secure connections.</p>
+        
+        {% if 'username' in session %}
+            <p>Hello, {{ session['username'] }}! Ready to start chatting?</p>
+            <a href="{{ url_for('chat') }}" class="btn btn-primary">Go to Chat</a>
+        {% else %}
+            <p>Join CyNoX today and start communicating securely!</p>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Log In</a>
+            <a href="{{ url_for('register') }}" class="btn btn-secondary">Register</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
