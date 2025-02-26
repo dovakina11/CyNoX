@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Studio Visjon - A digital media and marketing company offering innovative solutions to grow your business.">
-    <title>Studio Visjon</title>
+    <meta name="description" content="<?php echo htmlspecialchars(get_setting('site_name') . ' - ' . get_setting('site_description')); ?>">
+    <title><?php echo htmlspecialchars(get_setting('site_name')); ?></title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -42,18 +42,19 @@
         <div class="container">
             <h2>Our Services</h2>
             <div class="service-list">
+                <?php
+                $conn = db_connect();
+                $stmt = $conn->prepare('SELECT name, description FROM services ORDER BY created_at DESC');
+                $stmt->execute();
+                $result = $stmt->get_result();
+                while ($service = $result->fetch_assoc()):
+                ?>
                 <div class="service-item">
-                    <h3>Web Development</h3>
-                    <p>We create stunning, responsive websites tailored to your business needs.</p>
+                    <h3><?php echo htmlspecialchars($service['name']); ?></h3>
+                    <p><?php echo htmlspecialchars($service['description']); ?></p>
                 </div>
-                <div class="service-item">
-                    <h3>Digital Marketing</h3>
-                    <p>Boost your online presence with our expert marketing strategies.</p>
-                </div>
-                <div class="service-item">
-                    <h3>Branding</h3>
-                    <p>Build a strong, recognizable brand that resonates with your audience.</p>
-                </div>
+                <?php endwhile; ?>
+                <?php $stmt->close(); $conn->close(); ?>
             </div>
         </div>
     </section>
@@ -70,7 +71,7 @@
     <section id="contact" class="contact">
         <div class="container">
             <h2>Contact Us</h2>
-            <form action="#" method="POST" class="contact-form">
+            <form action="contact-handler.php" method="POST" class="contact-form">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" id="name" name="name" required>
@@ -91,7 +92,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2023 Studio Visjon. All rights reserved.</p>
+            <p>&copy; <?php echo date('Y'); ?> <?php echo htmlspecialchars(get_setting('site_name')); ?>. All rights reserved.</p>
         </div>
     </footer>
 
